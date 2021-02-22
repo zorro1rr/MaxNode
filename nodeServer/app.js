@@ -1,25 +1,27 @@
-//import the core node package http
-const http = require("http");
-const routes = require("./routes");
+const express = require("express");
 
-console.log(routes.someText);
+const app = express();
 
-/* method 1
- function rqListener(req, res) {
+// use is a built in express method that allows use to add a middleware function
+// this function is ran for every incoming request
+// the third arguement "next"(abitrary name) must be called in order for
+// the request to continue to the next middleware in line
 
- }
- http.createServer(rqListener); */
+app.use("/", (req, rest, next) => {
+  console.log("this always runs!");
+  next();
+});
 
-// method 2 anonymous function
+app.use("/add-product", (req, res, next) => {
+  console.log("in another middleware");
 
-// The http.createServer method returns a server
-// it's two arguements are request listener and response listeners
-// this give us built in objects that do what their name implies
-// we have delegated this logic to routes.js
-const server = http.createServer(routes.handler);
+  res.send("<h1>The add product page!</h1>");
+});
 
-// listen method starts a process where node.js will not
-// immedatelly exist the script instead stay open and listen
-// to requests on a specified port
+app.use("/", (req, res, next) => {
+  console.log("in another middleware 2");
 
-server.listen(3000);
+  res.send("<h1>hello from express!</h1>");
+});
+
+app.listen(3000);
