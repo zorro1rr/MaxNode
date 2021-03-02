@@ -9,7 +9,7 @@ const shopRoutes = require("./routes/shop");
 const app = express();
 
 //view engine points to which template engine we are using
-app.set("view engine", "pug");
+app.set("view engine", "ejs");
 // views points to which directory it can find the templates (the views folder)
 app.set("views", "views");
 
@@ -26,7 +26,7 @@ app.use(shopRoutes);
 
 app.use((req, res, next) => {
   // res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
-  res.status(404).render("404", { pageTitle: "Page Not Found" });
+  res.status(404).render("404", { pageTitle: "Page Not Found", path: "" });
 });
 
 app.listen(3000);
